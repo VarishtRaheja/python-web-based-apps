@@ -1,0 +1,75 @@
+<!--Extending the base.html file-->
+{% extends "base.html" %}
+
+<!-- Creating the title for each page-->
+{% block title%}
+
+Home page
+
+{%endblock title%}
+
+<!--Starting the block for content page from base.html-->
+{% block content%}
+<!-- Hero Banner -->
+ <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-dark" style="color:white">
+    <div class="w-100 col-md-5 p-lg-5 mx-auto my-5">
+      <h1 class="display-4 font-weight-bold">Discover Your Next Favorite</h1>
+      <p class="lead mb-4 font-weight-normal">Electronics, Apparel and More – Curated Just for You</p>
+      <div class="container mt-2">
+        <!--Custom scripting begins-->
+        <!-- set the login-flag -->
+        <script>
+          window.isLoggedIn = {{ 'true' if current_user.is_authenticated else 'false' }};
+        </script>
+
+        <!-- your flash messages will show up here -->
+        <div id="flash-container" class="mt-2"></div>
+
+        <!-- the shop button -->
+        <a id="shopNow"
+          class="btn btn-lg btn-primary"
+          data-market-url="{{ url_for('views.marketplace') }}"
+          style="background-color:#7C3AED; color:#fff;">
+          <i class="fas fa-store"></i>
+          Shop Now
+        </a>
+
+        <!-- load your JS after the elements exist -->
+        <script defer src="{{ url_for('static', filename='site.js') }}"></script>
+      </div>
+
+    <!--Custom scripting ends here-->  
+    </div>
+ </div>
+
+ <div class="product-device box-shadow d-none d-md-block"></div>
+ <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
+  
+ <!-- Product Categories -->
+  <section id="products" class="container my-5">
+      <div class="row">
+        {% for product in categories %}
+          <div class="col-sm-6 col-md-3 col-lg-3 mb-4 d-flex">
+            <div class="card w-100 shadow-sm border-0" id="customCard">
+              <img
+                src="{{product.img_url }}"
+                class="card-img-top product-img-small"
+                alt="{{ product.name }}"
+                loading="lazy"
+              >
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title" style="font-size: 0.9rem; color:black;">{{ product.name }}</h5>
+
+                <a
+                  href="#"
+                  class="mt-auto btn btn-outline-secondary"
+                >View Details</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+  </section>
+
+{% endblock content %}
+

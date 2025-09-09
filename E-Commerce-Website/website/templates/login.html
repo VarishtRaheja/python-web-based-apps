@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<div class="container-xxl min-vh-100 d-flex align-items-center justify-content-center pt-5">
+    <div class="card shadow-lg p-4 login-card text-dark"
+    style="max-width:450px; width:100%;">
+      <h3 class="text-center mb-4">Welcome Back!</h3>
+        <img class="mb-4" 
+            src="https://www.kindpng.com/picc/m/46-468482_transparent-cool-png-logos-cool-non-copyrighted-logos.png" 
+            width="200" 
+            height="150">
+
+      <form method="POST" action="{{ url_for('views.login_page') }}">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+          {{ form.username.label(class="font-weight-bold") }}
+          {{ form.username(class="form-control form-control-lg", placeholder="username") }}
+          {% for err in form.username.errors %}
+              <span style="color:red;">{{ err }}</span><br>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+          {{ form.password.label(class="font-weight-bold") }}
+          {{ form.password(class="form-control form-control-lg", placeholder="Password") }}
+          {% for err in form.password.errors %}
+            <span style="color:red;">{{ err }}</span><br>
+          {% endfor %}
+        </div>
+
+        <div class="form-group form-check">
+          {{ form.remember_me(class="form-check-input") }}
+          {{ form.remember_me.label(class="form-check-label") }}
+        </div>
+
+        <div class="form-group form-check">
+            {{form.submit(class="btn btn-sm btn-primary")}} {{form.forgot_password(class="btn btn-small btn-secondary")}}
+        </div>
+
+      </form>
+
+      <hr>
+
+      <p class="text-center mb-0 checkbox mb-3">
+        New here? <a href="{{ url_for('views.register_page') }}">Create an account</a>
+      </p>
+  </div>
+</div>
+{% endblock %}

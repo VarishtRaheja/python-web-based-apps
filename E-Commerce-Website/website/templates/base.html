@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <!-- 2. Font Awesome Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-pCcGXx7LnzY9N…"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    />
+    <!--3. Custom css styles-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+    
+    <!--Navbar here -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{ url_for('views.index') }}"> V's Marketplace</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="{{ url_for('views.login_page') }}">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav"></div>
+            <ul class="nav modern-nav">
+                <li class="nav-item-active">
+                    <a class="nav-link" href="{{url_for('views.index')}}"><i class="fas fa-home"></i>
+                        Home<span class=sr-only>(Current)</span></a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="tab-login" data-mdb-pill-init role="tab" 
+                    aria-controls="pills-login" aria-selected="true" 
+                    href="{{url_for('views.marketplace')}}">
+                    <i class="fas fa-store"></i>
+                    Market
+                </a>
+                </li>
+            </ul>
+            <!--
+             <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('views.login_page')}}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Register</a>
+                </li>
+            </ul> -->
+            <!-- Pills navs -->
+            {%if current_user.is_authenticated %}
+
+                <ul class="nav modern-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" id="tab-budget" role="tab">
+                        <i class="fas fa-coins"></i>
+                        Budget: {{ current_user.budget }}
+                        </a>
+                    </li>
+
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="tab-login" data-mdb-pill-init role="tab"
+                        aria-controls="pills-login" aria-selected="true">Welcome, {{ current_user.username }}</a>
+                    </li>
+
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="tab-logout" href="{{ url_for('views.logout_page') }}" role="tab"
+                        aria-controls="pills-login" aria-selected="true">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                        </a>
+                    </li>
+                </ul>
+
+            {% else %}
+                <ul class="nav nav-pills nav-justified mb-1" id="ex1" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="tab-login" data-mdb-pill-init href="{{ url_for('views.login_page') }}" role="tab"
+                        aria-controls="pills-login" aria-selected="true">Login</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="tab-register" data-mdb-pill-init href="{{url_for('views.register_page')}}" role="tab"
+                        aria-controls="pills-register" aria-selected="false">Register</a>
+                    </li>
+                </ul>
+            {% endif %}
+
+    <!-- Pills navs -->
+    </nav>
+    <nav aria-label="breadcrumb" class="bg-dark py-2 mb-0">
+        <ol class="breadcrumb container mb-0">
+            <li class="breadcrumb-item"><a href="{{url_for('views.index')}}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="#">
+                <i class="fas fa-tags"></i>
+                Discounted Products
+            </a></li>
+        </ol>
+    </nav>
+
+    <br>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="container mt-3">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show text-center" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+    <br>
+    {%block content%}{% endblock %}
+    <br>
+    
+    <!--Future content here-->
+  
+
+
+
+
+
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+    -->
+        <div class="bottomnav">
+            <a class="contact" href="#contact">Contact</a>
+            <a class="about" href="#about">About</a>
+        </div>
+  </body>
+</html>
